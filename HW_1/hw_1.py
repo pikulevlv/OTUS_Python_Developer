@@ -104,13 +104,71 @@ print('Передаем список с положительными и отри
 print(filter_num_list([-2,-1,0,1,2,3,4,5,6,7,8,9,10,11], filter_method='prime'))
 
 # Задание 3. Создать декоратор для замера времени выполнения функции.
-from time import time
 
+def time_decorator(func):
+    from time import time
+    def new_func(*args, **kwargs):
+        """
+        Декоратор принимает функцию, печатает ее название,
+        время начала выполнения, время окончания выполнения и
+        общее время выполнения в секундах.
+        :param args: any args
+        :param kwargs: any kwargs
+        :return: function object
+        """
+        start = time()
+        print('Function name:', func.__name__)
+        print('Start:', start)
+        result = func(*args, **kwargs)
+        end = time()
+        print('End:', end)
+        print('Processing time (s):', end - start)
+        return result
+    return new_func
 
 # test
-print('*'*20, 'Task #2', '*'*20)
-print(time())
+print('*'*20, 'Task #3', '*'*20)
+# мануальное присваивание декторатора
+my_decorator = time_decorator(filter_num_list)
+my_decorator(list(range(1000)), filter_method='prime')
+print('-'*5)
+
+# с использованием конструкции с @
+@time_decorator
+def example_func():
+    from time import sleep
+    sleep(1.2)
+    print('some work')
+example_func()
 
 # БОНУСНОЕ ЗАДАНИЕ: создать декоратор, который показывает вложенные входы в функцию.
 # Применить на примере вычисления чисел Фибоначчи
-#WIP
+
+
+def func_enters_decorator(func):
+    """
+    Декоратор выводит вложенные входы функции и результат вычислений
+    :param func: function object
+    :return: function object
+    """
+    def new_func(b):
+        print('{}->{}({})'.format('-'*b, func.__name__, b))
+        res = func(b)
+        print('<-{}{}({})=={}'.format('-'*b, func.__name__, b, res))
+        return res
+    return new_func
+
+@func_enters_decorator
+def fib(a):
+    """
+    Функция принимает на вход номер позиции ряда Фибоначчи (int)
+    (начиная с 0, как принято в Python) и возвращает его значение
+    :param a: int
+    :return: int
+    """
+    if a > 1:
+        return fib(a-1) + fib(a-2)
+    else:
+        return 1
+# test
+fib(5)
