@@ -1,42 +1,44 @@
 # Задание 1. Написать функцию, которая принимает N целых чисел и возвращает список квадратов этих чисел.
 # Бонусом будет сделать keyword аргумент для выбора степени, в которую будут возводиться числа.
-def power_list(*args, pow=2):
+def power_list(*args, power=2):
     """
     Функция принимает неограниченное кол-во аргументов (целых чисел)
     и возвращает список этих чисел, возведенных в квадрат.
     :param args: int
-    :param pow: int, float
+    :param power: int, float
     :return: list
     """
     # выполним проверку принадлежности args типу integer
-    check_map_args = map(lambda a: isinstance(a, int) == True, args)
+    check_map_args = map(lambda a: isinstance(a, int), args)
     check_list_args = list(check_map_args)
     if len(check_list_args) != sum(check_list_args):
         print('ERROR! Incorrect type of arg(args).')
         return None
 
-    # выполним проверку принадлежности pow типу integer или float
-    check_pow = isinstance(pow, (int, float))
+    # выполним проверку принадлежности power типу integer или float
+    check_pow = isinstance(power, (int, float))
     if not check_pow:
-        print('ERROR! Incorrect type of pow.')
+        print('ERROR! Incorrect type of power.')
         return None
 
-    return [arg ** pow for arg in args]
+    return [pow(arg,power) for arg in args]
 
 # test
 print('*'*20, 'Task #1', '*'*20)
-print('Передаем args, но не указываем pow\n', power_list(2,3,4))
+print('Передаем args, но не указываем power\n', power_list(2,3,4))
 print('-'*5)
-print('Передаем args и указываем pow=3\n',power_list(2,3,4, pow=3))
+print('Передаем args и указываем power=3\n',power_list(2,3,4, power=3))
 print('-'*5)
-print('Передаем args и pow передаем как строку\n',power_list(2,3,4, pow='3'))
+print('Передаем args и power передаем как строку\n',power_list(2,3,4, power='3'))
 print('-'*5)
 print('Передаем args, один из которых типа float\n',power_list(2,2.0))
 print('-'*5)
 
 # Задание 2. Написать функцию, которая на вход принимает список из целых чисел, и возвращает
 # только чётные/нечётные/простые числа (выбор производится передачей дополнительного аргумента).
-def filter_num_list(num_list=None, filter_method='even'):
+FILTER_METHODS = ('even', 'odd', 'prime',)
+
+def filter_num_list(num_list=None, filter_method=FILTER_METHODS[0]):
     """
     Функция принимает список целых чисел и возвращает в зависимости от выбранного метода
     список, эелементы которого являются четными, нечетными, простыми числами.
@@ -59,11 +61,11 @@ def filter_num_list(num_list=None, filter_method='even'):
     else:
         pass
     # проверяем переданный параметр, указывающий метод фильтрации, и обрабатываем список
-    if filter_method == 'even':
+    if filter_method == FILTER_METHODS[0]:
         return list(filter(lambda x: x%2 == 0, num_list))
-    elif filter_method == 'odd':
+    elif filter_method == FILTER_METHODS[1]:
         return list(filter(lambda x: x%2 != 0, num_list))
-    elif filter_method == 'prime':
+    elif filter_method == FILTER_METHODS[2]:
         prime_list = []
         for num in num_list:
             divider_list = [i for i in range(1,num+1)]
@@ -95,13 +97,13 @@ print('Передаем список, но делаем ошибку в указ
 print(filter_num_list([1,2,3,4,5], filter_method='eve'))
 print('-'*5)
 print('Передаем список и параметр фильтрации - even (четные)')
-print(filter_num_list([1,2,3,4,5], filter_method='even'))
+print(filter_num_list([1,2,3,4,5], filter_method=FILTER_METHODS[0]))
 print('-'*5)
 print('Передаем список и параметр фильтрации - odd (нечетные)')
-print(filter_num_list([1,2,3,4,5], filter_method='odd'))
+print(filter_num_list([1,2,3,4,5], filter_method=FILTER_METHODS[1]))
 print('-'*5)
 print('Передаем список с положительными и отрицательными integer и параметр фильтрации - prime (простые числа)')
-print(filter_num_list([-2,-1,0,1,2,3,4,5,6,7,8,9,10,11], filter_method='prime'))
+print(filter_num_list([-2,-1,0,1,2,3,4,5,6,7,8,9,10,11], filter_method=FILTER_METHODS[2]))
 
 # Задание 3. Создать декоратор для замера времени выполнения функции.
 
