@@ -8,24 +8,31 @@ from pprint import pprint
 
 
 class BaseVehicle(metaclass=ABCMeta):
+
     @abstractmethod
     def get_mileage(self) -> int:
         raise NotImplementedError
+
     @abstractmethod
     def move(self, distance: int) -> int:
         raise NotImplementedError
+
     @abstractmethod
     def get_features(self) -> None:
         raise NotImplementedError
+
     @abstractmethod
     def make_sound(self) -> None:
         raise NotImplementedError
+
 
 class BaseEngine(metaclass=ABCMeta):
 
     @abstractmethod
     def crash(self):
-        ...
+        return ...
+
+
 @dataclass(init=True, repr=True, eq=True, order=False, unsafe_hash=False, frozen=False)
 class Engine(BaseEngine):
     e_model: str
@@ -84,8 +91,10 @@ class MechanicVehicle(BaseVehicle):
 
     def __str__(self):
         return f"{self.__class__.__name__} {self.__producer} {self.__model} {self.__release_year}"
+
     def __repr__(self):
         return f"{self.__class__.__name__} {self.__producer} {self.__model} {self.__release_year}"
+
     @property
     def get_mileage(self):
         return self.__mileage
@@ -154,6 +163,7 @@ class Car(MechanicVehicle):
     WHEELS = 4
     MAX_SPEED = 200
     SPORT_MODE = False
+
     def sport_mode(self, sport_mode_coef = 1.2):
         self.SPORT_MODE = not self.SPORT_MODE
 
