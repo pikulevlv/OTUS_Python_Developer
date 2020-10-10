@@ -1,0 +1,2 @@
+secret_key = '35776b13f50be5e64783795d20f359a3'
+PASSWORD = '12345678'
