@@ -8,11 +8,11 @@ Employees
 <h1>Employee list</h1>
 <div>
     <ul>
-        {% for employee_id in employees %}
+        {% for employee_id in staff %}
         <li>
-<!--            <a href="{{ url_for('product_app.product_detail',product_id=product_id) }}">-->
-                {{ employees[employee_id] }}
-            </a>
+            <a href="{{ url_for('employee_app.staff_info',employee_id=employee_id) }}">
+                <b>{{ staff[employee_id][0] }}</b></a>
+            (<code>{{ staff[employee_id][1] }}</code>)
         </li>
         {% endfor %}
     </ul>

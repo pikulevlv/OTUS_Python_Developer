@@ -2,9 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>
+        {% block title %}
+        Base title
+        {% endblock %}
+    </title>
 </head>
 <body>
 
+<a href="{{ url_for('index') }}">Start</a>
+<a href="{{ url_for('employee_app.employee_list') }}">Team</a>
+<hr>
+<div>
+    {% block body %}
+    Base page
+
+    {% endblock %}
+</div>
 </body>
 </html>
