@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Employees
+{% endblock %}
+
+{% block body %}
+<h1>Employee list</h1>
+<div>
+    <ul>
+        {% for employee_id in employees %}
+        <li>
+<!--            <a href="{{ url_for('product_app.product_detail',product_id=product_id) }}">-->
+                {{ employees[employee_id] }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
