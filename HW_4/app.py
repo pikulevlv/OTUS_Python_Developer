@@ -10,10 +10,11 @@ app.register_blueprint(employee_blueprint_app, url_prefix="/employees")
 
 @app.route("/", methods=['POST', 'GET'])
 def index():
-    # if request.method == 'POST':
-    #     return
+    user = "Stranger"
+    if request.method == 'POST':
+        user = request.form.get('user', 'guest')
     browser = request.headers.get('User-Agent')
-    return render_template('index.html', browser=browser)
+    return render_template('index.html', browser=browser, user=user)
 
 
 # @app.route("/user/<name>/")

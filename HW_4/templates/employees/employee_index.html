@@ -5,16 +5,49 @@ Employees
 {% endblock %}
 
 {% block body %}
-<h1>Employee list</h1>
-<div>
-    <ul>
-        {% for employee_id in staff %}
-        <li>
-            <a href="{{ url_for('employee_app.staff_info',employee_id=employee_id) }}">
-                <b>{{ staff[employee_id][0] }}</b></a>
-            (<code>{{ staff[employee_id][1] }}</code>)
-        </li>
-        {% endfor %}
-    </ul>
+<div class="p-3 mb-2 bg-white text-dark"><h1>Employee list</h1></div>
+
+<div class="row">
+    <div class="col col-12 col-md-6">
+        <ol class="list-group">
+
+
+            {% for employee_id in staff %}
+            <li class="mb-1 single-specialist list-group-item">
+                <i>{{ employee_id }}</i>
+                <a class="my-1" href="{{ url_for('employee_app.staff_info',employee_id=employee_id) }}">
+                    <b>{{ staff[employee_id][0] }}</b></a>
+                (<code>{{ staff[employee_id][1] }}</code>)
+            </li>
+            {% else %}
+            <div class="ml-3">The list is empty.</div>
+            {% endfor %}
+
+
+
+
+
+
+        </ol>
+    </div>
 </div>
+</div>
+
+<div class="col col-12 col-md-6">
+    <a href="{{ url_for('employee_app.add_staff') }}">
+        <button id="hire-staff" class="btn btn-info btn-lg">Hire new</button>
+    </a>
+</div>
+
+
+
+{% endblock %}
+
+{% block after_body %}
+<script>
+$(function() {
+    const staffNames = $('.single-specialist')
+    console.log(staffNames)
+});
+</script>
 {% endblock %}
