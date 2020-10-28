@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add new team's member
+{% endblock %}
+
+{% block body %}
+<h3>Please, enter personal data for the team's member.</h3>
+<hr>
+
+<form method="POST">
+    {{ form.csrf_token }}
+    <div><h3><code id="staff-name">{{ form.name.label }}</code></h3> {{ form.name() }}</div>
+    <div><h3><code  id="staff-name">{{ form.role.label }}</code></h3> {{ form.role() }}</div>
+    <br>
+    <div>
+    <a href={{ form.submit() }}
+        <button id="hire-staff" class="btn btn-info btn-lg">Hire</button>
+    </a>
+</div>
+</form>
+
+
+{% endblock %}
