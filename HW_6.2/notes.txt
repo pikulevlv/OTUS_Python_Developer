@@ -1,0 +1,3 @@
+sudo docker-compose down --rmi local
+sudo docker build . -t hw63
+sudo docker-compose up
