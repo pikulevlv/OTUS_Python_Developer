@@ -6,9 +6,11 @@ authors = ["Lev Pikulev <pikulev.l.v@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-Django = "2.1"
+Django = "2.2"
 psycopg2-binary = "^2.8.6"
 DateTime = "^4.3"
+django-bootstrap4 = "^2.3.1"
+django-debug-toolbar = "^3.1.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -1,10 +1,21 @@
+{% load bootstrap4 %}
+
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Pr</title>
+
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+  </head>
+      <div>
+        {% block content %}{% endblock content %}
+      </div>
 </html>

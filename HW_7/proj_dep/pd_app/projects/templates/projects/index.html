@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Start</title>
-</head>
+{% extends "base.html" %}
+
+{% block content %}
+
 <body>
     <h1> All members </h1>
     {% for unit in staff_units %}
@@ -26,4 +24,4 @@
     {% endfor %}
 
 </body>
-</html>
+{% endblock %}

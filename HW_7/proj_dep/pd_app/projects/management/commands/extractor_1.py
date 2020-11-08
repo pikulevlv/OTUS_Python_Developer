@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = 'Extractor_1 with db'
 
     def handle(self, *args, **options):
-        print('Hello from Extractor_1.1')
+        print('Hello from Extractor_1.1!\n')
 
         # Извлечение
         sert_1 = Sertificate.objects.filter(name='Prof_ERP')
@@ -32,7 +32,6 @@ class Command(BaseCommand):
         unit_3 = Staff.objects.get(name='Leonid', surname='Pulman',
                                       salary=180_000,
                                       is_staff=True)
-        print(unit_1, unit_2, unit_3)
 
         proj_1 = Project.objects.get(name="INFAPRIM_ZUP.Project",
                                         description="new project...")
@@ -59,10 +58,16 @@ class Command(BaseCommand):
             print('-', slp.name)
         print("Какие direct у unit_1 ?")
         for d in unit_1.direct.all():
-            print(d.name)
+            print('-', d.name)
         print("Какие serts у unit_1 ?")
         for srt in unit_1.serts.all():
             print('-', srt.name)
+        print("Какие роли у сотрудника с фамилией Lobko во всех проектах?")
+        lobko = Staff.objects.get(surname="Lobko")
+        lobko_id = lobko.id
+        for r in Role.objects.filter(staff__id=lobko_id):
+            print('-', r.name)
+
         print(f"Перечислите фамилии всех PM.")
         for s in Staff.objects.filter(sl_position__name="PM"):
             print('-', s.surname)
@@ -83,7 +88,7 @@ class Command(BaseCommand):
             for s in Stage.objects.filter(proj__id=id_):
                 print('--', s.name)
 
-        print("Тот же вопрос, но добавьте ролизадействованных"
+        print("Тот же вопрос, но добавьте ролизадействованных "
               " участников в разрезе этапов.")
         for p in Project.objects.all():
             print('В проекте', p.name, 'есть этапы:')
@@ -94,7 +99,24 @@ class Command(BaseCommand):
                 for r in Role.objects.filter(stages__id=s_id):
                     print('----', r.name, r.staff.name, r.staff.surname)
 
+        print("Какова суммарная плановая стоимость этапов для каждого проекта?")
+        for p in Project.objects.all():
+            total = Stage.objects.filter(proj__id=p.id).count()
+            summa = 0
+            for s in Stage.objects.filter(proj__id=p.id):
+                summa += s.exp_plan
+            print(f'- {p.name} состоит из {total} этапов общей стоимостью '
+                  f'{summa} рублей.')
 
+        print("Каковы даты начала и завершения для каждого проекта?")
+        for p in Project.objects.all():
+            stage_starts = []
+            stage_ends = []
+            for s in Stage.objects.filter(proj__id=p.id):
+                stage_starts.append(s.start_plan)
+                stage_ends.append(s.end_plan)
+            print(f'- {p.name} стартует {min(stage_starts)} '
+                  f'и завершается {max(stage_ends)}.')
 
 
 
