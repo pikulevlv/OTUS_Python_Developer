@@ -8,6 +8,7 @@ authors = ["Lev Pikulev <pikulev.l.v@gmail.com>"]
 python = "^3.8"
 Django = "2.1"
 psycopg2-binary = "^2.8.6"
+DateTime = "^4.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Start</title>
 </head>
 <body>
-$END$
+    <h1> All members </h1>
+    {% for unit in staff_units %}
+        <li> {{ unit.name }} </li>
+    {% endfor %}
+
+    <h1> ERP team </h1>
+    {% for unit in erp_units %}
+        <li>{{ unit.name }}  {{ unit.surname }}</li>
+    {% endfor %}
+
+    <h1> ZUP team </h1>
+    {% for unit in zup_units %}
+        <li>{{ unit.name }}  {{ unit.surname }}</li>
+    {% endfor %}
+
+    <h1> Exclusive team </h1>
+    {% for unit in exp_units %}
+        <li>{{ unit }}</li>
+    {% endfor %}
+
 </body>
 </html>
