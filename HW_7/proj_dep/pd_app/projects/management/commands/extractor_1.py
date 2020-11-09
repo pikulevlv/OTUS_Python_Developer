@@ -88,7 +88,7 @@ class Command(BaseCommand):
             for s in Stage.objects.filter(proj__id=id_):
                 print('--', s.name)
 
-        print("Тот же вопрос, но добавьте ролизадействованных "
+        print("Тот же вопрос, но добавьте роли задействованных "
               " участников в разрезе этапов.")
         for p in Project.objects.all():
             print('В проекте', p.name, 'есть этапы:')
