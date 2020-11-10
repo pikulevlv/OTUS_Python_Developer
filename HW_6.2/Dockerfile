@@ -15,4 +15,6 @@ RUN poetry install --no-interaction --no-ansi
 
 COPY serp/ .
 
+#CMD ["python", "manage.py", "runserver", "8000"]
+#ENTRYPOINT ["python3", "manage.py", "migrate", "--noinput", "python3", "manage.py", "runserver", "0.0.0.0:8000"]
 CMD ["python", "manage.py", "runserver", "8000"]

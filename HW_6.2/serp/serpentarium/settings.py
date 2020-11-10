@@ -25,9 +25,9 @@ SECRET_KEY = 'gm79t2j9t4@8^v4br+7pb0^68l@#c1er$41uwe^c8-%5ms&2f_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = [
+    '0.0.0.0',
+]
 
 # Application definition
 
@@ -75,25 +75,25 @@ WSGI_APPLICATION = 'serpentarium.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'serpdb',
-#         'USER': 'user',
-#         'PASSWORD': 'password',
-#         # 'HOST': 'localhost',
-#         'HOST': 'pg',
-#         'PORT': '5432',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'serpdb',
+        'USER': 'user',
+        'PASSWORD': 'password',
+        # 'HOST': 'localhost',
+        'HOST': 'pg',
+        'PORT': '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
