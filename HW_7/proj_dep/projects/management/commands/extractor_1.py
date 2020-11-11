@@ -15,7 +15,6 @@ class Command(BaseCommand):
         sert_2 = Sertificate.objects.filter(name='Spec_ERP')
         sert_3 = Sertificate.objects.filter(name='Expert')
 
-
         dir_1 = Direction.objects.filter(name='ERP')
         dir_2 = Direction.objects.filter(name='ZUP')
 
@@ -32,7 +31,6 @@ class Command(BaseCommand):
         unit_3 = Staff.objects.get(name='Leonid', surname='Pulman',
                                       salary=180_000,
                                       is_staff=True)
-
         proj_1 = Project.objects.get(name="INFAPRIM_ZUP.Project",
                                         description="new project...")
         stage_1 = Stage.objects.get(name="INFAPRIM_ZUP.Project.Stage#1",
@@ -40,15 +38,13 @@ class Command(BaseCommand):
                                        start_plan=date(2020, 12, 14),
                                        end_plan=date(2021, 1, 20),
                                        exp_plan=305_000,
-                                       is_completed=False
-                                       )
+                                       is_completed=False)
         stage_2 = Stage.objects.get(name="INFAPRIM_ZUP.Project.Stage#2",
                                        proj=proj_1,
                                        start_plan=date(2021, 1, 21),
                                        end_plan=date(2021, 3, 20),
                                        exp_plan=405_000,
-                                       is_completed=False
-                                       )
+                                       is_completed=False)
         role_1 = Role.objects.get(name="PM", proj__name="INFAPRIM_ZUP.Project")
 
         # # __________________________________________________
@@ -71,7 +67,6 @@ class Command(BaseCommand):
         print(f"Перечислите фамилии всех PM.")
         for s in Staff.objects.filter(sl_position__name="PM"):
             print('-', s.surname)
-        
         print("Существует ли сотрудники по направлению 'УХ'?")
         print('-', Direction.objects.filter(name='УХ').exists())
         print("Сколько сотрудников по направлению 'ERP'?")
@@ -99,7 +94,8 @@ class Command(BaseCommand):
                 for r in Role.objects.filter(stages__id=s_id):
                     print('----', r.name, r.staff.name, r.staff.surname)
 
-        print("Какова суммарная плановая стоимость этапов для каждого проекта?")
+        print("Какова суммарная плановая стоимость этапов "
+              "для каждого проекта?")
         for p in Project.objects.all():
             total = Stage.objects.filter(proj__id=p.id).count()
             summa = 0
@@ -117,10 +113,3 @@ class Command(BaseCommand):
                 stage_ends.append(s.end_plan)
             print(f'- {p.name} стартует {min(stage_starts)} '
                   f'и завершается {max(stage_ends)}.')
-
-
-
-
-
-
-

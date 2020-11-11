@@ -3,30 +3,29 @@ from projects.models import Staff, StaffListPosition, Direction, Sertificate
 from projects.models import Project, Stage, Role
 from datetime import date
 
+
 class Command(BaseCommand):
     help = 'Worker_1 with db'
 
     def handle(self, *args, **options):
         print('Hello from Worker_1.1')
-        # # Удаление
+        # Удаление
         Sertificate.objects.all().delete()
         Direction.objects.all().delete()
         StaffListPosition.objects.all().delete()
         Staff.objects.all().delete()
 
-        #Creation
+        # Creation
         sert_1 = Sertificate.objects.create(name='Prof_ERP')
         sert_2 = Sertificate.objects.create(name='Spec_ERP')
         sert_3 = Sertificate.objects.create(name='Expert')
-
         dir_1 = Direction.objects.create(name='ERP')
         dir_2 = Direction.objects.create(name='ZUP')
-
         sl_pos_1 = StaffListPosition.objects.create(name='KONS')
         sl_pos_2 = StaffListPosition.objects.create(name='DEV')
         sl_pos_3 = StaffListPosition.objects.create(name='PM')
 
-        #unit #1
+        # unit #1
         unit_1 = Staff.objects.create(name='Sveta', surname='Molodtsova',
                                       salary=140_000, is_staff=True)
         unit_1.sl_position.add(sl_pos_2)
@@ -48,7 +47,7 @@ class Command(BaseCommand):
         unit_2.save()
         print(unit_2)
 
-        #unit #3
+        # unit #3
         unit_3 = Staff.objects.create(name='Leonid', surname='Pulman',
                                       salary=180_000,
                                       is_staff=True)
@@ -57,15 +56,15 @@ class Command(BaseCommand):
         unit_3.save()
         print(unit_3)
         
-        #__________________________________________________
+        # __________________________________________________
         
         print('Hello from Worker_1.2')
-        # # Удаление
+        # Удаление
         Project.objects.all().delete()
         Stage.objects.all().delete()
         Role.objects.all().delete()
 
-        #Creation
+        # Creation
         proj_1 = Project.objects.create(name="INFAPRIM_ZUP.Project", 
                                         description="new project...")
         stage_1 = Stage.objects.create(name="INFAPRIM_ZUP.Project.Stage#1",
@@ -86,12 +85,10 @@ class Command(BaseCommand):
         role_1.stages.add(stage_1, stage_2)
         role_1.staff = unit_3
         role_1.save()
-
         role_2 = Role.objects.create(name="KONS_UU", proj=proj_1)
         role_2.stages.add(stage_2)
         role_2.staff = unit_2
         role_2.save()
-
         print(proj_1)
         print(stage_1)
         print(stage_2)
