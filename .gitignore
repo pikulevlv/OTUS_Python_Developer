@@ -1,2 +1,11 @@
 HW_6.1/data/pgdata/
 HW_6/data/pgdata/
+HW_6.2/*
+HW_7/proj_dep/pd_app/pd_app/__pycache__/
+HW_7/proj_dep/pd_app/pd_app/__pycache__/*
+HW_7/proj_dep/pd_app/projects/__pycache__/
+HW_7/proj_dep/pd_app/projects/__pycache__/*
+HW_7/proj_dep/pd_app/projects/migrations/__pycache__/
+HW_7/proj_dep/pd_app/projects/migrations/__pycache__/*
+*__pycache__/
+HW_7/data/pgdata/

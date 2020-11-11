@@ -6,7 +6,10 @@ SECRET_KEY = 'ibfu=qhbgnd4!adp58s)_8!)$d5so8*m$e=z)i^*1@)cju$chm'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '0.0.0.0',
+    '127.0.0.1',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -59,10 +62,21 @@ WSGI_APPLICATION = 'pd_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'serpdb',
+        'USER': 'user',
+        'PASSWORD': 'password',
+        'HOST': 'pg',
+        'PORT': '5432',
     }
 }
 
