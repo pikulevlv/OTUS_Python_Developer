@@ -9,3 +9,7 @@ HW_7/proj_dep/pd_app/projects/migrations/__pycache__/
 HW_7/proj_dep/pd_app/projects/migrations/__pycache__/*
 *__pycache__/
 HW_7/data/pgdata/
+*.sqlite3
+*__pycache__/
+proj_dep/pd_app/projects/__pycache__/
+HW_6.2/data/pgdata/

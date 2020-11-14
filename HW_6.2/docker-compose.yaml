@@ -11,10 +11,7 @@ services:
     - ./serp:/app
     ports:
       - 8000:8000
-#    command: python manage.py runserver 0.0.0.0:5000
-#    command: python manage.py migrate
-    command: sh -c "python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000"
-#    command: sh -c "python3 manage.py migrate --noinput "
+    command: sh -c "python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000 && python3 manage.py work"
     depends_on:
       - pg
 
