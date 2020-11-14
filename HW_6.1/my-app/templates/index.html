@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<body>
+<div class="p-3 mb-2 col-12 bg-light text-dark">{% if user %}
+    <h1>Hello, {{ user }}!</h1>
+    {% else %}
+    <h1>Hello!</h1>
+    {% endif %}
+</div>
+
+</body>
+
+<div>
+    <b><i>Project's description:</i></b>
+    <br>
+    <i>bla bla bla</i>
+    <br>
+    <b><i>Your browser:</i></b>
+    <br>
+    <f>{{ browser[:31]|upper }}...</f>
+</div>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+# Команды для запуска
+sudo docker-compose down --rmi local
+sudo docker build . -t hw63
+sudo docker-compose up -d
+docker ps
+sudo docker exec -it hw_62_app_1 bash
+python3 manage.py worker

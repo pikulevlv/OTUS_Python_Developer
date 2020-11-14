@@ -1,0 +1,28 @@
+version: '3.5'
+
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      PG_HOST: pg
+    volumes:
+    - ./serp:/app
+    ports:
+      - 8000:8000
+    command: sh -c "python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000 && python3 manage.py work"
+    depends_on:
+      - pg
+
+  pg:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: serpdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5435:5432"
