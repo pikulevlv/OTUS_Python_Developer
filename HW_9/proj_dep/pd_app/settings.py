@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     'projects',
     # otherside
     'bootstrap4',
-    # 'debug_toolbar',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -35,7 +35,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # other
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
 ]
 
@@ -125,3 +125,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# LOGIN_URL = '/login/' # ссылка для входа
+LOGIN_URL = '/login/' # ссылка для входа
+LOGIN_REDIRECT_URL = '/' # куда направить при успешном входе
+LOGOUT_URL = '/' #
+LOGOUT_REDIRECT_URL = '/login/'

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Registry
+{% endblock %}
+
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">Log up</button>
+    </form>
+{% endblock %}
