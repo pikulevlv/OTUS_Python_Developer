@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block content %}
+    <div class="alert alert-info" role="alert">
+        <h1> Log in </h1>
+    </div>
+
     <form method="post">
         {% csrf_token %}
         {{form.as_p}}

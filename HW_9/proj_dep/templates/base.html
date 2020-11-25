@@ -16,13 +16,16 @@
   <div class="container-fluid">
       <ul class="nav">
       <li class="nav-item">
-      <a class="nav-link {% if active_page == '1' %} active {% endif %}" href="/">Home</a>
+      <a class="nav-link {% if active_page == '1' %} active {% endif %}" href="{% url 'projects:index' %}">Home</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link {% if active_page == '1' %} active {% endif %}" href="/projects_page/">Projects</a>
+      <a class="nav-link {% if active_page == '1' %} active {% endif %}" href="{% url 'projects:staff' %}">Staff</a>
       </li>
       <li class="nav-item">
-      <a class="nav-link {% if active_page == '1' %} active {% endif %}" href="/roles_page/">Roles</a>
+      <a class="nav-link {% if active_page == '1' %} active {% endif %}" href="{% url 'projects:projects_page' %}">Projects</a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link {% if active_page == '1' %} active {% endif %}" href="{% url 'projects:roles_page' %}">Roles</a>
       </li>
       <li class="nav-item">
       <a class="nav-link {% if active_page == '1' %} active {% endif %}" href="{% url 'projects:contact_page' %}">Contact us</a>

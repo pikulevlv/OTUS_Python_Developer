@@ -16,12 +16,13 @@
         <div class="row">
             <div class="col col-12 col-md-8 col-lg-6 col-xl-4">
                 <ul class="list-group">
-                    {% for unit in project_units %}
+                    {% for unit in object_list %}
                     <li class="list-group-item">
                         {{ unit.name }}
                         <br>
                         {{ unit.description }}
-
+                        <br>
+                        <a href="{% url 'projects:projects_detail' unit.pk %}">more...</a>
                     </li>
                     {% endfor %}
                 </ul>

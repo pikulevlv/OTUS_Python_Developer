@@ -4,7 +4,7 @@ from .models import Project, Stage, Role
 # from celery import current_app
 from django.views.generic import ListView, DetailView, UpdateView, \
     CreateView, FormView, DeleteView
-from .forms import ContactForm, StaffForm, RegistrationForm, LoginForm
+from .forms import ContactForm, StaffForm, RegistrationForm, LoginForm, ProjectForm, RoleForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -21,9 +21,22 @@ class StaffOnlyMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_staff
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+def index_view(request):
+    context = {}
+    context['staff_units'] = Role.objects.all().count()
+    context['proj_units'] = Project.objects.all().count()
+    context['dir_units'] = Direction.objects.all().count()
+    context['sl_units'] = StaffListPosition.objects.all().count()
+    context['sert_units'] = Sertificate.objects.all().count()
+    context['active_page'] = '1'
+    return render(request, 'projects/index.html', context)
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 class StaffListView(ListView):
     model = Staff # Модель, которую нужно вывести в список
-    template_name = 'projects/index.html' # в какой шаблон выведем данные
+    template_name = 'projects/staff.html' # в какой шаблон выведем данные
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -42,7 +55,7 @@ class StaffCreateView(CreateView):
     template_name = 'projects/edit_create_staff.html'
     success_url = '/'
     # fields = '__all__' # возьмем все поля
-    # fields = ('name','card', 'specia', 'age') # перечислим нужные поля
+    # fields = ('name',) # перечислим нужные поля
     # исключить ненужные поля можно в формах
     form_class = StaffForm
 
@@ -50,13 +63,6 @@ class StaffCreateView(CreateView):
         user = self.request.user # мы т.к. в форме создания змеи скрывали пользователя
         form.instance.user = user # прописываем его из инстанса формы
         return super().form_valid(form) # сохраняем форму
-
-
-class UserCreateView(CreateView):
-    model = User
-    form_class = RegistrationForm
-    success_url = '/'
-    template_name = 'projects/register.html'
 
 
 # class StaffUpdateView(StaffOnlyMixin, UpdateView):
@@ -73,23 +79,109 @@ class StaffDeleteView(DeleteView):
     template_name = 'projects/delete_confirm_staff.html'
     success_url = '/'
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def projects_page_view(request):
-    project_units = Project.objects.all()
-    context = {"project_units": project_units}
-    context['active_page'] = '1'
-    return render(request, 'projects/projects_page.html', context)
+class UserCreateView(CreateView):
+    model = User
+    form_class = RegistrationForm
+    success_url = '/'
+    template_name = 'projects/register.html'
 
-def roles_page_view(request):
-    role_units = Role.objects.all()
-    context = {"role_units": role_units}
-    context['active_page'] = '1'
-    return render(request, 'projects/roles_page.html', context)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+class ProjectListView(ListView):
+    model = Project # Модель, которую нужно вывести в список
+    template_name = 'projects/projects_page.html' # в какой шаблон выведем данные
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['active_page'] = '1'
+        return context
+
+class ProjectDetailView(DetailView):
+    model = Project
+    template_name = 'projects/projects_detail.html'
+
+
+# class ProjectCreateView(StaffOnlyMixin, CreateView):
+class ProjectCreateView(CreateView):
+    model = Project
+    template_name = 'projects/edit_create_project.html'
+    success_url = '/projects/'
+    # fields = '__all__' # возьмем все поля
+    # fields = ('name',) # перечислим нужные поля
+    # исключить ненужные поля можно в формах
+    form_class = ProjectForm
+
+    def form_valid(self, form):
+        user = self.request.user # мы т.к. в форме создания змеи скрывали пользователя
+        form.instance.user = user # прописываем его из инстанса формы
+        return super().form_valid(form) # сохраняем форму
+
+# class StaffUpdateView(StaffOnlyMixin, UpdateView):
+class ProjectUpdateView(UpdateView):
+    model = Project
+    template_name = 'projects/edit_create_project.html'
+    success_url = '/'
+    # fields = '__all__' # возьмем все поля
+    form_class = ProjectForm
+
+# class ProjectDeleteView(AdminOnlyMixin, DeleteView):
+class ProjectDeleteView(DeleteView):
+    model = Project
+    template_name = 'projects/delete_confirm_project.html'
+    success_url = '/'
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+class RoleListView(ListView):
+    model = Role # Модель, которую нужно вывести в список
+    template_name = 'projects/roles_page.html' # в какой шаблон выведем данные
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['active_page'] = '1'
+        return context
+
+class RoleDetailView(DetailView):
+    model = Role
+    template_name = 'projects/roles_detail.html'
+
+class RoleCreateView(CreateView):
+    model = Role
+    template_name = 'projects/edit_create_role.html'
+    success_url = '/roles_page/'
+    # fields = '__all__' # возьмем все поля
+    # fields = ('name',) # перечислим нужные поля
+    # исключить ненужные поля можно в формах
+    form_class = RoleForm
+
+    def form_valid(self, form):
+        user = self.request.user # мы т.к. в форме создания змеи скрывали пользователя
+        form.instance.user = user # прописываем его из инстанса формы
+        return super().form_valid(form) # сохраняем форму
+
+# class StaffUpdateView(StaffOnlyMixin, UpdateView):
+class RoleUpdateView(UpdateView):
+    model = Role
+    template_name = 'projects/edit_create_role.html'
+    success_url = '/roles_page/'
+    # fields = '__all__' # возьмем все поля
+    form_class = RoleForm
+
+# class ProjectDeleteView(AdminOnlyMixin, DeleteView):
+class RoleDeleteView(DeleteView):
+    model = Role
+    template_name = 'projects/delete_confirm_role.html'
+    success_url = '/roles_page/'
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class ContactFormView(FormView):
     template_name = "projects/contact_page.html"
     form_class = ContactForm
     success_url = '/'
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class LoginUserView(LoginView):
     form_class = LoginForm

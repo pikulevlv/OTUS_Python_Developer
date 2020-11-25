@@ -8,32 +8,16 @@
 
 <div class="container-fluid">
     <div class="alert alert-info" role="alert">
-        <h1> Main </h1>
+        <h1> Main information </h1>
     </div>
 
     <div class="container">
-        <h3> All members </h3>
-        <div class="row">
-            <div class="col col-12 col-md-8 col-lg-6 col-xl-4">
-                <ul class="list-group">
-                    {% for unit in object_list %}
-                    <li class="list-group-item">
-                        {% if unit.image %}
-                            <img class="img rounded-circle" width="50px"
-                                 height="50px" src="{{ unit.image.url }}" alt="employee">
-                        {% else %}
-                            <img class="img rounded-circle" width="50px"
-                                 height="50px" src="media/staff/staff_default.png" alt="employee">
-                        {% endif %}
-                        <a href="{% url 'projects:staff_detail' unit.pk %}">{{ unit.name }}</a>
-
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <br>
-
+        <h4><b>Team:</b> {{ staff_units }} professionals</h4>
+        <h4><b>Projects:</b> {{ proj_units }}</h4>
+        <h4><b>Directions:</b> {{ dir_units }}</h4>
+        <h4><b>State list positions:</b> {{ sl_units }}</h4>
+        <h4><b>Sertificates:</b> {{ sert_units }}</h4>
     </div>
+    <br>
 </div>
 {% endblock %}

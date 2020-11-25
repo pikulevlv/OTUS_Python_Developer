@@ -1,5 +1,5 @@
 from django import forms
-from .models import Staff
+from .models import Staff, Project,Role
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
@@ -22,6 +22,20 @@ class StaffForm(forms.ModelForm):
         model = Staff
         exclude = ('user',)
 
+
+class ProjectForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    description = forms.TextInput()
+
+    class Meta:
+        model = Project
+        exclude = ('user',)
+
+class RoleForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = Role
+        exclude = ('user',)
 
 class RegistrationForm(UserCreationForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
