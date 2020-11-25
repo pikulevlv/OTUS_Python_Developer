@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+
 # Create your views here.
 
 class AdminOnlyMixin(UserPassesTestMixin):
@@ -44,13 +45,13 @@ class StaffListView(ListView):
         return context
 
 
-class StaffDetailView(DetailView):
+class StaffDetailView(LoginRequiredMixin, DetailView):
     model = Staff
     template_name = 'projects/staff_detail.html'
 
 
 # class StaffCreateView(StaffOnlyMixin, CreateView):
-class StaffCreateView(CreateView):
+class StaffCreateView(StaffOnlyMixin, CreateView):
     model = Staff
     template_name = 'projects/edit_create_staff.html'
     success_url = '/'
@@ -66,7 +67,7 @@ class StaffCreateView(CreateView):
 
 
 # class StaffUpdateView(StaffOnlyMixin, UpdateView):
-class StaffUpdateView(UpdateView):
+class StaffUpdateView(StaffOnlyMixin, UpdateView):
     model = Staff
     template_name = 'projects/edit_create_staff.html'
     success_url = '/'
@@ -74,18 +75,11 @@ class StaffUpdateView(UpdateView):
     form_class = StaffForm
 
 # class StaffDeleteView(AdminOnlyMixin, DeleteView):
-class StaffDeleteView(DeleteView):
+class StaffDeleteView(AdminOnlyMixin, DeleteView):
     model = Staff
     template_name = 'projects/delete_confirm_staff.html'
     success_url = '/'
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-class UserCreateView(CreateView):
-    model = User
-    form_class = RegistrationForm
-    success_url = '/'
-    template_name = 'projects/register.html'
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -98,13 +92,13 @@ class ProjectListView(ListView):
         context['active_page'] = '1'
         return context
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(LoginRequiredMixin, DetailView):
     model = Project
     template_name = 'projects/projects_detail.html'
 
 
 # class ProjectCreateView(StaffOnlyMixin, CreateView):
-class ProjectCreateView(CreateView):
+class ProjectCreateView(StaffOnlyMixin, CreateView):
     model = Project
     template_name = 'projects/edit_create_project.html'
     success_url = '/projects/'
@@ -119,7 +113,7 @@ class ProjectCreateView(CreateView):
         return super().form_valid(form) # сохраняем форму
 
 # class StaffUpdateView(StaffOnlyMixin, UpdateView):
-class ProjectUpdateView(UpdateView):
+class ProjectUpdateView(StaffOnlyMixin, UpdateView):
     model = Project
     template_name = 'projects/edit_create_project.html'
     success_url = '/'
@@ -127,7 +121,7 @@ class ProjectUpdateView(UpdateView):
     form_class = ProjectForm
 
 # class ProjectDeleteView(AdminOnlyMixin, DeleteView):
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(AdminOnlyMixin, DeleteView):
     model = Project
     template_name = 'projects/delete_confirm_project.html'
     success_url = '/'
@@ -143,11 +137,11 @@ class RoleListView(ListView):
         context['active_page'] = '1'
         return context
 
-class RoleDetailView(DetailView):
+class RoleDetailView(LoginRequiredMixin, DetailView):
     model = Role
     template_name = 'projects/roles_detail.html'
 
-class RoleCreateView(CreateView):
+class RoleCreateView(StaffOnlyMixin, CreateView):
     model = Role
     template_name = 'projects/edit_create_role.html'
     success_url = '/roles_page/'
@@ -162,7 +156,7 @@ class RoleCreateView(CreateView):
         return super().form_valid(form) # сохраняем форму
 
 # class StaffUpdateView(StaffOnlyMixin, UpdateView):
-class RoleUpdateView(UpdateView):
+class RoleUpdateView(StaffOnlyMixin, UpdateView):
     model = Role
     template_name = 'projects/edit_create_role.html'
     success_url = '/roles_page/'
@@ -170,14 +164,14 @@ class RoleUpdateView(UpdateView):
     form_class = RoleForm
 
 # class ProjectDeleteView(AdminOnlyMixin, DeleteView):
-class RoleDeleteView(DeleteView):
+class RoleDeleteView(AdminOnlyMixin, DeleteView):
     model = Role
     template_name = 'projects/delete_confirm_role.html'
     success_url = '/roles_page/'
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-class ContactFormView(FormView):
+class ContactFormView(LoginRequiredMixin, FormView):
     template_name = "projects/contact_page.html"
     form_class = ContactForm
     success_url = '/'
@@ -191,3 +185,11 @@ class LoginUserView(LoginView):
 
 class LogoutUserView(LogoutView):
     pass
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+class UserCreateView(CreateView):
+    model = User
+    form_class = RegistrationForm
+    success_url = '/login/'
+    template_name = 'projects/register.html'

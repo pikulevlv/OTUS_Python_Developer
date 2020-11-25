@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Staff(models.Model):
@@ -12,7 +13,7 @@ class Staff(models.Model):
     is_staff = models.BooleanField(default=False)
     image = models.ImageField(upload_to='staff', blank=True, null=True)
     profile = models.FileField(upload_to='staff/profiles', blank=True, null=True)
-
+    user = models.ForeignKey(User,on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} {self.surname} " \

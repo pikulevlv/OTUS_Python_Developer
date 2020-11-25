@@ -126,7 +126,6 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-# LOGIN_URL = '/login/' # ссылка для входа
 LOGIN_URL = '/login/' # ссылка для входа
 LOGIN_REDIRECT_URL = '/' # куда направить при успешном входе
 LOGOUT_URL = '/' #
