@@ -19,6 +19,7 @@ class Staff(models.Model):
         return f"{self.name} {self.surname} " \
                f"(id# {self.id})"
 
+
 # class StaffImage(models.Model):
 #     image = models.ImageField(upload_to='staff')
 #     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
@@ -45,10 +46,20 @@ class Sertificate(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=256, null=False, blank=False)
+    direction = models.ManyToManyField(Direction, blank=True)
     description = models.TextField(null=True)
 
     def __str__(self):
         return self.name
+
+    def project_resource_count(self):
+
+        res = []
+        for s in Stage.objects.filter(proj__id=self.id):
+            for r in Role.objects.filter(stages__id=s.id):
+                res.append(r.staff.id)
+        return len(list(set(res)))
+
 
 
 class Stage(models.Model):
