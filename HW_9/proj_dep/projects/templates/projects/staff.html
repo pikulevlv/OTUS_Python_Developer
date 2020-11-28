@@ -32,9 +32,12 @@
                 </ul>
             </div>
         </div>
+        {% if user.is_authenticated %}
         <br>
         <a href="{% url 'projects:create_staff' %}"
            class="btn btn-primary">Hair a new employee</a>
+        {% else %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

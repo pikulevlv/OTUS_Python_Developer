@@ -12,8 +12,10 @@ class Staff(models.Model):
     serts = models.ManyToManyField("Sertificate", blank=True)
     is_staff = models.BooleanField(default=False)
     image = models.ImageField(upload_to='staff', blank=True, null=True)
-    profile = models.FileField(upload_to='staff/profiles', blank=True, null=True)
-    user = models.ForeignKey(User,on_delete=models.SET_NULL, null=True, blank=True)
+    profile = models.FileField(upload_to='staff/profiles', blank=True,
+                               null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                             blank=True)
 
     def __str__(self):
         return f"{self.name} {self.surname} " \
@@ -34,12 +36,14 @@ class StaffListPosition(models.Model):
 
 class Direction(models.Model):
     name = models.CharField(max_length=64, default='no-direction')
+
     def __str__(self):
         return self.name
 
 
 class Sertificate(models.Model):
     name = models.CharField(max_length=256, null=False, blank=False)
+
     def __str__(self):
         return self.name
 
@@ -59,7 +63,6 @@ class Project(models.Model):
             for r in Role.objects.filter(stages__id=s.id):
                 res.append(r.staff.id)
         return len(list(set(res)))
-
 
 
 class Stage(models.Model):
@@ -82,9 +85,11 @@ class Stage(models.Model):
 
 class Role(models.Model):
     name = models.CharField(max_length=64, null=False, blank=False)
-    proj = models.ForeignKey(Project, on_delete=models.CASCADE, null=False, blank=False)
+    proj = models.ForeignKey(Project, on_delete=models.CASCADE, null=False,
+                             blank=False)
     stages = models.ManyToManyField(Stage, blank=True)
-    staff = models.ForeignKey(Staff, on_delete=models.SET_NULL, blank=True, null=True)
+    staff = models.ForeignKey(Staff, on_delete=models.SET_NULL, blank=True,
+                              null=True)
 
     def __str__(self):
         return f"{self.name} in {self.proj}"
