@@ -2,11 +2,10 @@ from django.test import TestCase, Client
 from .models import Staff, StaffListPosition, Direction, \
     Sertificate, Project, Stage, Role
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 import datetime
 
-
-# Create your tests here.
 
 class TestModels(TestCase):
     # Что желательно проверить в models
@@ -139,7 +138,7 @@ class TestViews(TestCase):
         # Тест-клиент позволяет не поднимать сервер для выполнения запросов
         self.client = Client()
         # Создаем 3 пользователя с разными правами
-        User.objects.create_superuser('admin', 'test@test.com',
+        self.admin = User.objects.create_superuser('admin', 'test@test.com',
                                       '12345678qwerty')
         User.objects.create_user('staff', 'staff@test.com',
                                  '12345678qwerty', is_staff=True)
@@ -234,7 +233,8 @@ class TestViews(TestCase):
         self.role_1_dev.stages.set([self.stage_1_2])
 
     def test_index(self):
-        response = self.client.get('/')
+        url = reverse('projects:index')
+        response = self.client.get(url)
         # проверка кода ответа
         self.assertEqual(response.status_code, 200)
         # проверка содержимого в html-коде
@@ -258,13 +258,15 @@ class TestViews(TestCase):
         self.assertEqual(response.context['active_page'], "1")
 
     def test_staff(self):
-        url = '/staff/'
+        url = reverse('projects:staff')
         response = self.client.get(url)
         # проверка кода ответа
         self.assertEqual(response.status_code, 200)
         # доступность кнопки под админом
         self.client.logout()
-        self.client.login(username='admin', password='12345678qwerty')
+        # self.client.login(username='admin', password='12345678qwerty')
+        # используем force_login(), чтобы не зависеть от логина и пароля
+        self.client.force_login(self.admin)
         response = self.client.get(url)
         encoding = 'utf-8'
         text = response.content.decode(encoding)
